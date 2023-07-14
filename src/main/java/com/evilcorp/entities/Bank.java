@@ -22,6 +22,10 @@ public class Bank {
     @Column(name = "bin", nullable = false, unique = true, length = 9)
     private String bin;
 
+    @Basic
+    @Column(name = "name", nullable = false, unique = true)
+    private String name;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "bank")
     private List<BankDeposit> deposits;
 }

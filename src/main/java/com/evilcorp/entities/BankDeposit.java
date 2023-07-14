@@ -3,7 +3,6 @@ package com.evilcorp.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Entity
@@ -33,7 +32,7 @@ public class BankDeposit {
 
     @Basic
     @Column(name = "annual_rate", nullable = false)
-    private Double annual_rate;
+    private Double annualRate;
 
     @Basic
     @Column(name = "period", nullable = false)
