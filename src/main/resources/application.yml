@@ -4,7 +4,8 @@ spring:
   datasource:
     username: admin
     password: password
-    url: jdbc:postgresql://evilcorp-db/bank-db?autoReconnect=true&useSSL=false
+    url: jdbc:postgresql://localhost:5432/bank-db?autoReconnect=true&useSSL=false
+#    url: jdbc:postgresql://evilcorp-db/bank-db?autoReconnect=true&useSSL=false
   jpa:
     hibernate:
       ddl-auto: none

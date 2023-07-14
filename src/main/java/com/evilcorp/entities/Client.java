@@ -34,7 +34,6 @@ public class Client {
     @JoinColumn(name = "legal_type_id", nullable = false)
     private LegalType legalType;
 
-    @OneToMany
-    @JoinColumn(name = "client_id", nullable = false)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
     private List<BankDeposit> deposits;
 }

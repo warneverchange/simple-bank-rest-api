@@ -23,8 +23,7 @@ public class LegalType {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @OneToMany
-    @JoinColumn(name = "legal_type_id")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "legalType")
     private List<Client> clients;
 
 }

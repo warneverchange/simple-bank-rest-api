@@ -22,7 +22,6 @@ public class Bank {
     @Column(name = "bin", nullable = false, unique = true, length = 9)
     private String bin;
 
-    @OneToMany
-    @JoinColumn(name = "bank_id", nullable = false)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "bank")
     private List<BankDeposit> deposits;
 }
