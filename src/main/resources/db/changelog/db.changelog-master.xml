@@ -2,62 +2,9 @@
 <databaseChangeLog
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
-        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
-http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
-http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
-http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
-    <changeSet id="1" author="Chechkin Konstantin">
-        <createTable tableName="legal_type" schemaName="bank">
-            <column name="id" type="serial">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="name" type="varchar(255)">
-                <constraints nullable="false" unique="true"/>
-            </column>
-        </createTable>
-        <createTable tableName="client" schemaName="bank">
-            <column name="id" type="serial">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="name" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="short_name" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="address" type="varchar(255)">
-                <constraints nullable="false" unique="false"/>
-            </column>
-            <column name="legal_type_id" type="int">
-                <constraints nullable="false" unique="false" foreignKeyName="fk_legal_type" references="bank.legal_type(id)"/>
-            </column>
-        </createTable>
-        <createTable tableName="bank" schemaName="bank">
-            <column name="id" type="serial">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="bin" type="varchar(9)">
-                <constraints nullable="false" unique="true"/>
-            </column>
-        </createTable>
-        <createTable tableName="bank_deposit" schemaName="bank">
-            <column name="client_id" type="int">
-                <constraints nullable="false" unique="false" foreignKeyName="fk_client" references="bank.client(id)"/>
-            </column>
-            <column name="bank_id" type="int">
-                <constraints nullable="false" unique="false" foreignKeyName="fk_bank" references="bank.bank(id)"/>
-            </column>
-            <column name="opening_date" type="timestamp">
-                <constraints nullable="false"/>
-            </column>
-            <column name="annual_rate" type="decimal(3, 2)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="period" type="int">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <includeAll path="migrations/client" relativeToChangelogFile="true"/>
+    <includeAll path="migrations/bank" relativeToChangelogFile="true"/>
+    <includeAll path="migrations/deposit" relativeToChangelogFile="true"/>
 </databaseChangeLog>

@@ -4,7 +4,7 @@ spring:
   datasource:
     username: admin
     password: password
-    url: jdbc:postgresql://localhost:5432/bank-db
+    url: jdbc:postgresql://localhost:5432/bank-db?autoReconnect=true&useSSL=false
   jpa:
     hibernate:
       ddl-auto: none
@@ -15,3 +15,5 @@ spring:
     show-sql: true
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.xml
+
+

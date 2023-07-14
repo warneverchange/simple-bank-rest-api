@@ -1,0 +1,25 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet id="deposit_1" author="Chechkin Konstantin">
+        <createTable tableName="bank_deposit" schemaName="bank">
+            <column name="client_id" type="int">
+                <constraints nullable="false" unique="false" foreignKeyName="fk_client" references="bank.client(id)"/>
+            </column>
+            <column name="bank_id" type="int">
+                <constraints nullable="false" unique="false" foreignKeyName="fk_bank" references="bank.bank(id)"/>
+            </column>
+            <column name="opening_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="annual_rate" type="decimal(3, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="period" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

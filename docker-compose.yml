@@ -1,4 +1,16 @@
 services:
+  bank-application:
+    image: bank-application:0.0.1
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - evilcorp-db
+    ports:
+      - "8000:8000"
+    networks:
+      - postgres
+
   evilcorp-db:
     container_name: evilcorp-db
     image: postgres
@@ -23,6 +35,8 @@ services:
       PGADMIN_CONFIG_SERVER_MODE: 'False'
     volumes:
       - pgadmin:/var/lib/pgadmin
+    depends_on:
+      - evilcorp-db
     ports:
       - "5050:80"
     networks:
