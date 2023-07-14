@@ -3,6 +3,8 @@ package com.evilcorp.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(schema = "bank", name = "bank")
 @Getter
@@ -19,4 +21,8 @@ public class Bank {
     @Basic
     @Column(name = "bin", nullable = false, unique = true, length = 9)
     private String bin;
+
+    @OneToMany
+    @JoinColumn(name = "bank_id", nullable = false)
+    private List<BankDeposit> deposits;
 }

@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.List;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,5 +22,9 @@ public class LegalType {
     @Basic
     @Column(name = "name", nullable = false, unique = true)
     private String name;
+
+    @OneToMany
+    @JoinColumn(name = "legal_type_id")
+    private List<Client> clients;
 
 }

@@ -3,6 +3,8 @@ package com.evilcorp.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(schema = "bank", name = "client")
 @NoArgsConstructor
@@ -28,9 +30,11 @@ public class Client {
     @Column(name = "address", nullable = false)
     private String address;
 
-    @OneToOne(
-            mappedBy = "id",
-            fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "legal_type_id", nullable = false)
     private LegalType legalType;
+
+    @OneToMany
+    @JoinColumn(name = "client_id", nullable = false)
+    private List<BankDeposit> deposits;
 }
