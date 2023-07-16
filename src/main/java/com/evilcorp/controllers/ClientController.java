@@ -4,6 +4,7 @@ import com.evilcorp.entities.Client;
 import com.evilcorp.repositories.ClientRepository;
 import com.evilcorp.services.ClientService;
 import com.evilcorp.services.DepositService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,23 +31,23 @@ public record ClientController(
     public ResponseEntity<?> getAllClients() {
         return ResponseEntity.ok(clientService.getAllClients());
     }
-    @GetMapping("/name")
-    public ResponseEntity<?> getClientByName(String clientName) {
+    @GetMapping("/name/{clientName}")
+    public ResponseEntity<?> getClientByName(@PathVariable("clientName") String clientName) {
         return ResponseEntity.ok(clientService.getClientByClientName(clientName));
     }
 
-    @GetMapping("/short_name")
-    public ResponseEntity<?> getClientByShortName(String shortClientName) {
+    @GetMapping("/short_name/{clientName}")
+    public ResponseEntity<?> getClientByShortName(@PathVariable("clientName") String shortClientName) {
         return ResponseEntity.ok(clientService.getClientByClientShortName(shortClientName));
     }
 
     @PostMapping
     public ResponseEntity<?> registerNewClient(
             @RequestBody Client client,
-            HttpRequest request) {
+            HttpServletRequest request) {
         Client registeredClient = clientService.registerNewClient(client);
         return ResponseEntity
-                .created(URI.create(String.format("%s/%o", request.getURI(), client.getId())))
+                .created(URI.create(String.format("%s/%o", request.getRequestURI(), registeredClient.getId())))
                 .body(client);
     }
 }

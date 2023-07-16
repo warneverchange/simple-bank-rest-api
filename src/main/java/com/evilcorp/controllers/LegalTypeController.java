@@ -2,6 +2,7 @@ package com.evilcorp.controllers;
 
 import com.evilcorp.entities.LegalType;
 import com.evilcorp.services.LegalTypesService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +19,10 @@ public record LegalTypeController(LegalTypesService legalTypesService) {
     }
 
     @PostMapping
-    public ResponseEntity<?> registerNewLegalType(@RequestBody LegalType legalType, HttpRequest request) {
+    public ResponseEntity<?> registerNewLegalType(@RequestBody LegalType legalType, HttpServletRequest request) {
         LegalType registeredLegalType = legalTypesService.registerNewLegalType(legalType);
         return ResponseEntity
-                .created(URI.create(String.format("%s/%o", request.getURI(), registeredLegalType.getId())))
+                .created(URI.create(String.format("%s/%o", request.getRequestURI(), registeredLegalType.getId())))
                 .body(registeredLegalType);
     }
 }
