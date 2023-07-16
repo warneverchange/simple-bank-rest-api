@@ -3,6 +3,7 @@ package com.evilcorp.controllers;
 import com.evilcorp.entities.Bank;
 import com.evilcorp.services.BankService;
 import com.evilcorp.services.DepositService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,10 +42,10 @@ public record BankController(
     }
 
     @PostMapping
-    public ResponseEntity<?> registerNewBank(@RequestBody Bank bank, HttpRequest request) {
+    public ResponseEntity<?> registerNewBank(@RequestBody Bank bank, HttpServletRequest request) {
         Bank registeredBank = bankService.registerNewBank(bank);
         return ResponseEntity
-                .created(URI.create(String.format("%s/%o", request.getURI(), registeredBank.getId())))
+                .created(URI.create(String.format("%s/%o", request.getRequestURI(), registeredBank.getId())))
                 .body(registeredBank);
     }
 }
