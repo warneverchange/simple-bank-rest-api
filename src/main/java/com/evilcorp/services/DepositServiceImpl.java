@@ -27,7 +27,7 @@ public class DepositServiceImpl implements DepositService {
     @Override
     public BankDeposit getDepositById(Integer depositId) {
         if (!depositRepository.existsById(depositId)) {
-            throw new DepositNotFoundException("Deposit with such id not found", depositId);
+            throw new EntityNotFoundException("Deposit with such id not found", depositId);
         }
         return depositRepository.findById(depositId).get();
     }
@@ -35,7 +35,7 @@ public class DepositServiceImpl implements DepositService {
     @Override
     public List<BankDeposit> getClientsDeposits(Integer clientId) {
         if (!clientRepository.existsById(clientId)) {
-            throw new ClientNotFoundException("Client with such id not found", clientId);
+            throw new EntityNotFoundException("Client with such id not found", clientId);
         }
         Optional<Client> client = clientRepository.findById(clientId);
         return depositRepository.findAllByClient(client.orElseThrow());
@@ -44,7 +44,7 @@ public class DepositServiceImpl implements DepositService {
     @Override
     public List<BankDeposit> getAllDepositsInBank(Integer bankId) {
         if (!bankRepository.existsById(bankId)) {
-            throw new BankNotFoundException("Bank with such id not found", bankId);
+            throw new EntityNotFoundException("Bank with such id not found", bankId);
         }
         Optional<Bank> bank = bankRepository.findById(bankId);
         return depositRepository.findAllByBank(bank.orElseThrow());
@@ -67,7 +67,7 @@ public class DepositServiceImpl implements DepositService {
     @Override
     public void closeDeposit(Integer depositId) {
         if (!depositRepository.existsById(depositId)) {
-            throw new BankDepositNotFoundException("Not such deposit for closing", depositId);
+            throw new EntityNotFoundException("Not such deposit for closing", depositId);
         }
         depositRepository.deleteById(depositId);
     }

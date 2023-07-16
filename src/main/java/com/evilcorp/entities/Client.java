@@ -3,19 +3,22 @@ package com.evilcorp.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Entity
-@Table(schema = "bank", name = "client")
+@Table(name = "client")
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Setter
 @Getter
+@ToString
 @EqualsAndHashCode
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Integer id;
 
     @Basic
@@ -31,9 +34,9 @@ public class Client {
     private String address;
 
     @ManyToOne
-    @JoinColumn(name = "legal_type_id", nullable = false)
+    @JoinColumn(name = "legal_type_id", nullable = false, referencedColumnName = "id")
     private LegalType legalType;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
-    private List<BankDeposit> deposits;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "client", orphanRemoval = true)
+    private List<BankDeposit> deposits = new LinkedList<>();
 }

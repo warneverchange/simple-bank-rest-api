@@ -4,12 +4,15 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
     <changeSet id="deposit_1" author="Chechkin Konstantin">
-        <createTable tableName="bank_deposit" schemaName="bank">
+        <createTable tableName="bank_deposit">
+            <column name="id" type="serial">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
             <column name="client_id" type="int">
-                <constraints nullable="false" unique="false" foreignKeyName="fk_client" references="bank.client(id)"/>
+                <constraints nullable="false" unique="false" foreignKeyName="fk_client" references="client(id)"/>
             </column>
             <column name="bank_id" type="int">
-                <constraints nullable="false" unique="false" foreignKeyName="fk_bank" references="bank.bank(id)"/>
+                <constraints nullable="false" unique="false" foreignKeyName="fk_bank" references="bank(id)"/>
             </column>
             <column name="opening_date" type="timestamp">
                 <constraints nullable="false"/>

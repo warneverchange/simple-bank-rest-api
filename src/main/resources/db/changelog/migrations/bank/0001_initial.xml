@@ -4,7 +4,8 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
     <changeSet id="bank_1" author="CheckIns Konstantin">
-        <createTable tableName="bank" schemaName="bank">
+
+        <createTable tableName="bank">
             <column name="id" type="serial">
                 <constraints primaryKey="true" nullable="false"/>
             </column>

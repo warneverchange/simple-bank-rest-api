@@ -4,7 +4,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
-    <includeAll path="migrations/client" relativeToChangelogFile="true"/>
     <includeAll path="migrations/bank" relativeToChangelogFile="true"/>
+    <includeAll path="migrations/client" relativeToChangelogFile="true"/>
     <includeAll path="migrations/deposit" relativeToChangelogFile="true"/>
 </databaseChangeLog>

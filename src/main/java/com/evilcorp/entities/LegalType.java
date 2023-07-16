@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Entity
@@ -11,12 +12,14 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
+@ToString
 @EqualsAndHashCode
-@Table(schema = "bank", name = "legal_type")
+@Table(name = "legal_type")
 public class LegalType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Integer id;
 
     @Basic
@@ -24,6 +27,6 @@ public class LegalType {
     private String name;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "legalType")
-    private List<Client> clients;
+    private List<Client> clients = new LinkedList<>();
 
 }

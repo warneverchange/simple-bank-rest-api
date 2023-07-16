@@ -4,7 +4,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
     <changeSet id="client_1" author="Chechkin Konstantin">
-        <createTable tableName="legal_type" schemaName="bank">
+        <createTable tableName="legal_type">
             <column name="id" type="serial">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -12,7 +12,7 @@
                 <constraints nullable="false" unique="true"/>
             </column>
         </createTable>
-        <createTable tableName="client" schemaName="bank">
+        <createTable tableName="client">
             <column name="id" type="serial">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -26,7 +26,7 @@
                 <constraints nullable="false" unique="false"/>
             </column>
             <column name="legal_type_id" type="int">
-                <constraints nullable="false" unique="false" foreignKeyName="fk_legal_type" references="bank.legal_type(id)"/>
+                <constraints nullable="false" unique="false" foreignKeyName="fk_legal_type" references="legal_type(id)"/>
             </column>
         </createTable>
     </changeSet>

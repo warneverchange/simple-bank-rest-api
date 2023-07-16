@@ -1,8 +1,8 @@
 package com.evilcorp.services;
 
 import com.evilcorp.entities.Client;
-import com.evilcorp.exceptions.ClientNotFoundException;
 import com.evilcorp.exceptions.EntityAlreadyExistException;
+import com.evilcorp.exceptions.EntityNotFoundException;
 import com.evilcorp.repositories.ClientRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class ClientServiceImpl implements ClientService{
     public Client getClientById(Integer clientId) {
         Optional<Client> foundClient = clientRepository.findById(clientId);
         if (foundClient.isEmpty()) {
-            throw new ClientNotFoundException("Client with such id not found", clientId);
+            throw new EntityNotFoundException("Client with such id not found", clientId);
         }
         return foundClient.get();
     }
@@ -41,7 +41,7 @@ public class ClientServiceImpl implements ClientService{
     public Client getClientByClientName(String clientName) {
         Optional<Client> foundClient = clientRepository.findByName(clientName);
         if (foundClient.isEmpty()) {
-            throw new ClientNotFoundException("Client with such name not found", clientName);
+            throw new EntityNotFoundException("Client with such name not found", clientName);
         }
         return foundClient.get();
     }
@@ -50,7 +50,7 @@ public class ClientServiceImpl implements ClientService{
     public Client getClientByClientShortName(String clientShortName) {
         Optional<Client> foundClient = clientRepository.findByShortName(clientShortName);
         if (foundClient.isEmpty()) {
-            throw new ClientNotFoundException("Client with such short name not found", clientShortName);
+            throw new EntityNotFoundException("Client with such short name not found", clientShortName);
         }
         return foundClient.get();
     }

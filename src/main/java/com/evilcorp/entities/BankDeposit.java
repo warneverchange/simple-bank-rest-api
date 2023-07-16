@@ -6,24 +6,26 @@ import lombok.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(schema = "bank", name = "bank_deposit")
+@Table(name = "bank_deposit")
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @EqualsAndHashCode
 public class BankDeposit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_id", nullable = false)
+    @JoinColumn(name = "client_id", nullable = false, referencedColumnName = "id")
     private Client client;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bank_id", nullable = false)
+    @JoinColumn(name = "bank_id", nullable = false, referencedColumnName = "id")
     private Bank bank;
 
     @Basic

@@ -1,8 +1,8 @@
 package com.evilcorp.services;
 
 import com.evilcorp.entities.Bank;
-import com.evilcorp.exceptions.BankNotFoundException;
 import com.evilcorp.exceptions.EntityAlreadyExistException;
+import com.evilcorp.exceptions.EntityNotFoundException;
 import com.evilcorp.repositories.BankRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ public class BankServiceImpl implements BankService {
     public Bank getBankById(Integer bankId) {
         Optional<Bank> bank = bankRepository.findById(bankId);
         if (bank.isEmpty()) {
-            throw new BankNotFoundException("Bank with such id's not found", bankId);
+            throw new EntityNotFoundException("Bank with such id's not found", bankId);
         }
         return bank.get();
     }
@@ -41,7 +41,7 @@ public class BankServiceImpl implements BankService {
     public Bank getBankByName(String bankName) {
         Optional<Bank> bank = bankRepository.findByName(bankName);
         if (bank.isEmpty()) {
-            throw new BankNotFoundException("Bank with such name not found", bankName);
+            throw new EntityNotFoundException("Bank with such name not found", bankName);
         }
         return bank.get();
     }
@@ -50,7 +50,7 @@ public class BankServiceImpl implements BankService {
     public Bank getBankByBin(String binNumber) {
         Optional<Bank> bank = bankRepository.findBankByBin(binNumber);
         if (bank.isEmpty()) {
-            throw new BankNotFoundException("Bank with such bin not found", binNumber);
+            throw new EntityNotFoundException("Bank with such bin not found", binNumber);
         }
         return bank.get();
     }

@@ -2,20 +2,24 @@ package com.evilcorp.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.GenerationTime;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Entity
-@Table(schema = "bank", name = "bank")
+@Table(name = "bank")
 @Getter
 @Setter
+@ToString
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
 public class Bank {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Integer id;
 
     @Basic
@@ -26,6 +30,6 @@ public class Bank {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "bank")
-    private List<BankDeposit> deposits;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "bank", orphanRemoval = true)
+    private List<BankDeposit> deposits = new LinkedList<>();
 }
