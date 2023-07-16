@@ -54,4 +54,13 @@ public class BankServiceImpl implements BankService {
         }
         return bank.get();
     }
+
+    @Override
+    public void updateBankInfo(Bank bankForUpdate) {
+        if (bankForUpdate.getId() == null
+                || bankRepository.findById(bankForUpdate.getId()).isEmpty()) {
+            throw new EntityNotFoundException("Bank isn't present", bankForUpdate.getId());
+        }
+        bankRepository.save(bankForUpdate);
+    }
 }

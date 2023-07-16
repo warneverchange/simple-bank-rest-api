@@ -17,4 +17,5 @@ public interface DepositService {
     BankDeposit createNewDeposit(BankDeposit bankDeposit);
     void closeDeposit(Integer depositId);
 
+    void updateDepositInfo(BankDeposit depositForUpdate);
 }

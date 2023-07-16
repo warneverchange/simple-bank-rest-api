@@ -12,4 +12,6 @@ public interface BankService {
     Bank getBankByName(String bankName);
 
     Bank getBankByBin(String bin);
+
+    void updateBankInfo(Bank bankForUpdate);
 }

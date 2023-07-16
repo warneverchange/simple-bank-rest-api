@@ -26,6 +26,11 @@ public record ClientController(
         return ResponseEntity.ok(depositService.getClientsDeposits(clientId));
     }
 
+    @PutMapping
+    public ResponseEntity<?> updateClientInfo(@RequestBody Client clientForUpdate) {
+        clientService.updateClientInfo(clientForUpdate);
+        return ResponseEntity.ok().build();
+    }
 
     @GetMapping
     public ResponseEntity<?> getAllClients() {

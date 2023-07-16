@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class ClientServiceImpl implements ClientService{
+public class ClientServiceImpl implements ClientService {
     public final ClientRepository clientRepository;
 
     @Override
@@ -53,5 +53,14 @@ public class ClientServiceImpl implements ClientService{
             throw new EntityNotFoundException("Client with such short name not found", clientShortName);
         }
         return foundClient.get();
+    }
+
+    @Override
+    public void updateClientInfo(Client clientForUpdate) {
+        if (clientForUpdate.getId() == null
+                || clientRepository.findById(clientForUpdate.getId()).isEmpty()) {
+            throw new EntityNotFoundException("Client isn't present", clientForUpdate.getId());
+        }
+        clientRepository.save(clientForUpdate);
     }
 }

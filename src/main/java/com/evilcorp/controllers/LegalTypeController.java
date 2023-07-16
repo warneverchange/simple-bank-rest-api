@@ -18,6 +18,12 @@ public record LegalTypeController(LegalTypesService legalTypesService) {
         return ResponseEntity.ok(legalTypesService.getAllLegalTypes());
     }
 
+    @PutMapping
+    public ResponseEntity<?> updateLegalTypeInfo(@RequestBody LegalType legalType) {
+        legalTypesService.updateLegalTypeInfo(legalType);
+        return ResponseEntity.ok().build();
+    }
+
     @PostMapping
     public ResponseEntity<?> registerNewLegalType(@RequestBody LegalType legalType, HttpServletRequest request) {
         LegalType registeredLegalType = legalTypesService.registerNewLegalType(legalType);

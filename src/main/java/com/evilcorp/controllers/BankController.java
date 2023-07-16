@@ -41,6 +41,12 @@ public record BankController(
         return ResponseEntity.ok(bankService.getBankByName(bankName));
     }
 
+    @PutMapping
+    public ResponseEntity<?> updateBankInfo(@RequestBody Bank bankForUpdate) {
+        bankService.updateBankInfo(bankForUpdate);
+        return ResponseEntity.ok().build();
+    }
+
     @PostMapping
     public ResponseEntity<?> registerNewBank(@RequestBody Bank bank, HttpServletRequest request) {
         Bank registeredBank = bankService.registerNewBank(bank);

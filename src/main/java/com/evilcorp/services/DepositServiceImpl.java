@@ -71,4 +71,13 @@ public class DepositServiceImpl implements DepositService {
         }
         depositRepository.deleteById(depositId);
     }
+
+    @Override
+    public void updateDepositInfo(BankDeposit depositForUpdate) {
+        if (depositForUpdate.getId() == null
+                || depositRepository.findById(depositForUpdate.getId()).isEmpty()) {
+            throw new EntityNotFoundException("Bank deposit isn't present", depositForUpdate.getId());
+        }
+        depositRepository.save(depositForUpdate);
+    }
 }
