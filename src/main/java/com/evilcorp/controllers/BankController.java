@@ -31,6 +31,12 @@ public record BankController(
         return ResponseEntity.ok(bankService.getBankById(bankId));
     }
 
+    @DeleteMapping("/{bankId}")
+    public ResponseEntity<?> deleteBankById(@PathVariable("bankId") Integer bankId) {
+        bankService.deleteBankById(bankId);
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/bin/{binNumber}")
     public ResponseEntity<?> getBankByBinNumber(@PathVariable("binNumber") String binNumber) {
         return ResponseEntity.ok(bankService.getBankByBin(binNumber));

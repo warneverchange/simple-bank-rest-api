@@ -156,6 +156,10 @@ public class DepositServiceTests {
 
     @Test
     public void DepositServiceImpl_createNewDeposit_ReturnsBankDeposit_1() {
+        given(clientRepository.existsById(bankDeposit.getClient().getId())).willReturn(true);
+        given(bankRepository.existsById(bankDeposit.getBank().getId())).willReturn(true);
+        given(bankRepository.findById(bankDeposit.getBank().getId())).willReturn(Optional.of(bank));
+        given(clientRepository.findById(bankDeposit.getClient().getId())).willReturn(Optional.of(client));
         given(depositRepository.existsByClientAndBankAndOpeningDateAndAnnualRateAndPeriod(
                 bankDeposit.getClient(),
                 bankDeposit.getBank(),
@@ -177,6 +181,10 @@ public class DepositServiceTests {
 
     @Test
     public void DepositServiceImpl_createNewDeposit_ReturnsBankDeposit_2() {
+        given(clientRepository.existsById(bankDeposit.getClient().getId())).willReturn(true);
+        given(bankRepository.existsById(bankDeposit.getBank().getId())).willReturn(true);
+        given(bankRepository.findById(bankDeposit.getBank().getId())).willReturn(Optional.of(bank));
+        given(clientRepository.findById(bankDeposit.getClient().getId())).willReturn(Optional.of(client));
         given(depositRepository.existsByClientAndBankAndOpeningDateAndAnnualRateAndPeriod(
                 bankDeposit.getClient(),
                 bankDeposit.getBank(),
@@ -193,6 +201,21 @@ public class DepositServiceTests {
                 .period(bankDeposit.getPeriod())
                 .build();
         org.junit.jupiter.api.Assertions.assertThrows(EntityAlreadyExistException.class, () -> depositService.createNewDeposit(passedBankDeposit));
+    }
+
+    @Test
+    public void DepositServiceImpl_createNewDeposit_ReturnsBankDeposit_3() {
+        given(clientRepository.existsById(any())).willReturn(false);
+        var passedBankDeposit = BankDeposit
+                .builder()
+                .bank(bankDeposit.getBank())
+                .annualRate(bankDeposit.getAnnualRate())
+                .client(bankDeposit.getClient())
+                .openingDate(bankDeposit.getOpeningDate())
+                .period(bankDeposit.getPeriod())
+                .build();
+
+        org.junit.jupiter.api.Assertions.assertThrows(EntityNotFoundException.class, () -> depositService.createNewDeposit(passedBankDeposit));
     }
 
     @Test

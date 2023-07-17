@@ -14,4 +14,6 @@ public interface BankService {
     Bank getBankByBin(String bin);
 
     void updateBankInfo(Bank bankForUpdate);
+
+    void deleteBankById(Integer bankId);
 }

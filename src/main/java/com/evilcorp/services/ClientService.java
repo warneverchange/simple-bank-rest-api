@@ -13,4 +13,6 @@ public interface ClientService {
     Client getClientByClientShortName(String clientShortName);
 
     void updateClientInfo(Client clientForUpdate);
+
+    void deleteClientById(Integer clientId);
 }

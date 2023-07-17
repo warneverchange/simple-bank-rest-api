@@ -9,20 +9,37 @@
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="client_id" type="int">
-                <constraints nullable="false" unique="false" foreignKeyName="fk_client" references="client(id)"/>
+                <constraints nullable="false" unique="false"/>
             </column>
             <column name="bank_id" type="int">
-                <constraints nullable="false" unique="false" foreignKeyName="fk_bank" references="bank(id)"/>
+                <constraints nullable="false" unique="false"/>
             </column>
             <column name="opening_date" type="timestamp">
                 <constraints nullable="false"/>
             </column>
-            <column name="annual_rate" type="decimal(3, 2)">
+            <column name="annual_rate" type="decimal(4, 2)">
                 <constraints nullable="false"/>
             </column>
             <column name="period" type="int">
                 <constraints nullable="false"/>
             </column>
         </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="bank_deposit"
+                baseColumnNames="client_id"
+                constraintName="fk_client"
+                referencedTableName="client"
+                referencedColumnNames="id"
+                onUpdate="CASCADE"
+                onDelete="CASCADE"/>
+        <addForeignKeyConstraint
+                baseTableName="bank_deposit"
+                baseColumnNames="bank_id"
+                constraintName="fk_bank"
+                referencedTableName="bank"
+                referencedColumnNames="id"
+                onDelete="CASCADE"
+                onUpdate="CASCADE"/>
     </changeSet>
 </databaseChangeLog>

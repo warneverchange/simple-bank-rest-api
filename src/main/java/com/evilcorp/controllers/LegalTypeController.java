@@ -24,6 +24,18 @@ public record LegalTypeController(LegalTypesService legalTypesService) {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/{legalTypeId}")
+    public ResponseEntity<?> getLegalTypeById(@PathVariable("legalTypeId") Integer legalTypeId) {
+        return ResponseEntity.ok(legalTypesService.getLegalTypeById(legalTypeId));
+    }
+
+    @DeleteMapping("/{legalTypeId}")
+    public ResponseEntity<?> deleteLegalTypeById(@PathVariable("legalTypeId") Integer legalTypeId) {
+        legalTypesService.deleteLegalTypeById(legalTypeId);
+        return ResponseEntity.ok().build();
+
+    }
+
     @PostMapping
     public ResponseEntity<?> registerNewLegalType(@RequestBody LegalType legalType, HttpServletRequest request) {
         LegalType registeredLegalType = legalTypesService.registerNewLegalType(legalType);

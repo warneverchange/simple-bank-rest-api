@@ -6,6 +6,7 @@ import com.evilcorp.exceptions.EntityAlreadyExistException;
 import com.evilcorp.exceptions.EntityNotFoundException;
 import com.evilcorp.repositories.ClientRepository;
 import com.evilcorp.services.ClientServiceImpl;
+import org.assertj.core.api.Assert;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doThrow;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -118,6 +121,38 @@ public class ClientServiceTests {
         Assertions.assertThat(clientService.getClientByClientShortName(client.getShortName())).isEqualTo(client);
     }
 
+    @Test
+    public void ClientServiceImpl_deleteClientById_ReturnsVoid_1() {
+        given(clientRepository.existsById(client.getId())).willReturn(true);
+        doAnswer(invocation -> Assertions.assertThat(invocation.getArgument(0).equals(client.getId())))
+                .when(clientRepository)
+                .deleteById(any());
+        clientService.deleteClientById(client.getId());
+    }
 
+    @Test
+    public void ClientServiceImpl_deleteClientById_ReturnsVoid_2() {
+        doThrow(EntityNotFoundException.class)
+                .when(clientRepository)
+                .existsById(any());
+        org.junit.jupiter.api.Assertions.assertThrows(EntityNotFoundException.class, () -> clientService.deleteClientById(client.getId()));
+    }
 
+    @Test
+    public void ClientServiceImpl_updateClientInfo_ReturnsVoid_1() {
+        given(clientRepository.existsById(any())).willReturn(true);
+        doAnswer(invocation -> {
+            Assertions.assertThat(((Client) invocation.getArgument(0)).getId()).isEqualTo(client.getId());
+            return invocation.getArgument(0);
+        })
+                .when(clientRepository)
+                .save(client);
+        clientService.updateClientInfo(client);
+    }
+
+    @Test
+    public void ClientServiceImpl_updateClientInfo_ReturnsVoid_2() {
+        given(clientRepository.existsById(any())).willReturn(false);
+        org.junit.jupiter.api.Assertions.assertThrows(EntityNotFoundException.class, () -> clientService.updateClientInfo(client));
+    }
 }

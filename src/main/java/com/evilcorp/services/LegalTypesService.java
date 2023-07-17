@@ -10,4 +10,8 @@ public interface LegalTypesService {
     List<LegalType> getAllLegalTypes();
 
     void updateLegalTypeInfo(LegalType legalType);
+
+    LegalType getLegalTypeById(Integer legalTypeId);
+
+    void deleteLegalTypeById(Integer legalTypeId);
 }

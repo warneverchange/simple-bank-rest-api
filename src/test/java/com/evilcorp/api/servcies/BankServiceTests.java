@@ -1,6 +1,7 @@
 package com.evilcorp.api.servcies;
 
 import com.evilcorp.entities.Bank;
+import com.evilcorp.entities.Client;
 import com.evilcorp.exceptions.EntityAlreadyExistException;
 import com.evilcorp.exceptions.EntityNotFoundException;
 import com.evilcorp.repositories.BankRepository;
@@ -19,6 +20,8 @@ import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doThrow;
 
 @ExtendWith(MockitoExtension.class)
 public class BankServiceTests {
@@ -36,6 +39,7 @@ public class BankServiceTests {
     public void init() {
         var bank = Bank
                 .builder()
+                .id(1)
                 .name("Evil corp bank")
                 .bin("044525716")
                 .build();
@@ -109,5 +113,40 @@ public class BankServiceTests {
     public void BankServiceImpl_getBankByBin_ReturnsBank_2() {
         given(bankRepository.findBankByBin(bank.getBin())).willReturn(Optional.empty());
         org.junit.jupiter.api.Assertions.assertThrows(EntityNotFoundException.class, () -> bankService.getBankByBin(bank.getBin()));
+    }
+
+    @Test
+    public void BankServiceImpl_deleteBankById_ReturnsVoid_1() {
+        given(bankRepository.existsById(bank.getId())).willReturn(true);
+        doAnswer(invocation -> Assertions.assertThat(invocation.getArgument(0).equals(bank.getId())))
+                .when(bankRepository)
+                .deleteById(any());
+        bankService.deleteBankById(bank.getId());
+    }
+
+    @Test
+    public void BankServiceImpl_deleteBankById_ReturnsVoid_2() {
+        doThrow(EntityNotFoundException.class)
+                .when(bankRepository)
+                .existsById(any());
+        org.junit.jupiter.api.Assertions.assertThrows(EntityNotFoundException.class, () -> bankService.deleteBankById(bank.getId()));
+    }
+
+    @Test
+    public void BankServiceImpl_updateBankInfo_ReturnsVoid_1() {
+        given(bankRepository.existsById(any())).willReturn(true);
+        doAnswer(invocation -> {
+            Assertions.assertThat(((Bank) invocation.getArgument(0)).getId()).isEqualTo(bank.getId());
+            return invocation.getArgument(0);
+        })
+                .when(bankRepository)
+                .save(bank);
+        bankService.updateBankInfo(bank);
+    }
+
+    @Test
+    public void BankServiceImpl_updateBankInfo_ReturnsVoid_2() {
+        given(bankRepository.existsById(any())).willReturn(false);
+        org.junit.jupiter.api.Assertions.assertThrows(EntityNotFoundException.class, () -> bankService.updateBankInfo(bank));
     }
 }

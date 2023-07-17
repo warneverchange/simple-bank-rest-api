@@ -1,5 +1,7 @@
 package com.evilcorp.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenerationTime;
@@ -30,6 +32,7 @@ public class Bank {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "bank", orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "bank", orphanRemoval = true)
+    @JsonIgnoreProperties("deposits")
     private List<BankDeposit> deposits = new LinkedList<>();
 }

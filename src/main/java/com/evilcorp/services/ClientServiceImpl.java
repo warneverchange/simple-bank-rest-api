@@ -58,9 +58,17 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public void updateClientInfo(Client clientForUpdate) {
         if (clientForUpdate.getId() == null
-                || clientRepository.findById(clientForUpdate.getId()).isEmpty()) {
+                || !clientRepository.existsById(clientForUpdate.getId())) {
             throw new EntityNotFoundException("Client isn't present", clientForUpdate.getId());
         }
         clientRepository.save(clientForUpdate);
+    }
+
+    @Override
+    public void deleteClientById(Integer clientId) {
+        if (clientId == null || !clientRepository.existsById(clientId)) {
+            throw new EntityNotFoundException("Entity with such id isn't exist", clientId);
+        }
+        clientRepository.deleteById(clientId);
     }
 }

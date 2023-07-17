@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -35,5 +36,22 @@ public class LegalTypeServiceImpl implements LegalTypesService {
             throw new EntityNotFoundException("Legal type isn't present", legalType.getId());
         }
         legalTypeRepository.save(legalType);
+    }
+
+    @Override
+    public LegalType getLegalTypeById(Integer legalTypeId) {
+        Optional<LegalType> foundLegalType = legalTypeRepository.findById(legalTypeId);
+        if (foundLegalType.isEmpty()) {
+            throw new EntityNotFoundException("Such legal type isn't exist", legalTypeId);
+        }
+        return foundLegalType.orElseThrow();
+    }
+
+    @Override
+    public void deleteLegalTypeById(Integer legalTypeId) {
+        if (legalTypeId == null || !legalTypeRepository.existsById(legalTypeId)) {
+            throw new EntityNotFoundException("Entity with such identify not found", legalTypeId);
+        }
+        legalTypeRepository.deleteById(legalTypeId);
     }
 }

@@ -52,9 +52,17 @@ public class DepositServiceImpl implements DepositService {
 
     @Override
     public BankDeposit createNewDeposit(BankDeposit bankDeposit) {
+        Integer clientId = bankDeposit.getClient().getId();
+        Integer bankId = bankDeposit.getBank().getId();
+        if (!clientRepository.existsById(clientId) || !bankRepository.existsById(bankId)) {
+            throw new EntityNotFoundException("Client & bank must be exists", clientId);
+        }
+        var client = clientRepository.findById(clientId).orElseThrow();
+        var bank = bankRepository.findById(bankId).orElseThrow();
+
         if (depositRepository.existsByClientAndBankAndOpeningDateAndAnnualRateAndPeriod(
-                bankDeposit.getClient(),
-                bankDeposit.getBank(),
+                client,
+                bank,
                 bankDeposit.getOpeningDate(),
                 bankDeposit.getAnnualRate(),
                 bankDeposit.getPeriod()

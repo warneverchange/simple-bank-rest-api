@@ -1,5 +1,8 @@
 package com.evilcorp.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -37,6 +40,7 @@ public class Client {
     @JoinColumn(name = "legal_type_id", nullable = false, referencedColumnName = "id")
     private LegalType legalType;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "client", orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "client", orphanRemoval = true)
+    @JsonIgnoreProperties("deposits")
     private List<BankDeposit> deposits = new LinkedList<>();
 }

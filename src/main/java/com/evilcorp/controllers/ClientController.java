@@ -26,6 +26,12 @@ public record ClientController(
         return ResponseEntity.ok(depositService.getClientsDeposits(clientId));
     }
 
+    @DeleteMapping("/{clientId}")
+    public ResponseEntity<?> deleteClientById(@PathVariable("clientId") Integer clientId) {
+        clientService.deleteClientById(clientId);
+        return ResponseEntity.ok().build();
+    }
+
     @PutMapping
     public ResponseEntity<?> updateClientInfo(@RequestBody Client clientForUpdate) {
         clientService.updateClientInfo(clientForUpdate);
